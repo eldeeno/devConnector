@@ -67,12 +67,18 @@ router.post('/login', async (req, res) => {
   if (!validPassword) return res.status(400).send('Incorrect password...');
 
   const token = jwt.sign(
-    { id: user.id, name: user.name, email: user.email },
+    { 
+      id: user.id, 
+      name: user.name,
+      avatar: user.avatar 
+    },
     config.secretKey,
     { expiresIn: 3600 }
   );
   
-  res.send(token);
-})
+  res.json({
+    success: true,
+    token: 'Bearer ' + token});
+  });
 
 module.exports = router;
